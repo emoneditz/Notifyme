@@ -32,6 +32,7 @@
       background: radial-gradient(ellipse at top, #1a1a2e 0%, #16213e 40%, #0f0f23 100%);
       min-height: 100vh;
       display: flex;
+      flex-direction: column; /* Changed to column to accommodate footer */
       justify-content: center;
       align-items: center;
       overflow: hidden;
@@ -105,6 +106,8 @@
       max-width: 500px;
       width: 100%;
       padding: 20px;
+      flex-grow: 1; /* Added to push footer to the bottom */
+      justify-content: center;
     }
 
     .header {
@@ -570,6 +573,20 @@
       100% { background: radial-gradient(circle, #ffffff 30%, transparent 30%); }
     }
 
+    /* Footer styling */
+    footer {
+        width: 100%;
+        text-align: center;
+        padding: 20px;
+        color: var(--text-secondary);
+        font-size: 0.85rem;
+        font-weight: 300;
+        letter-spacing: 0.5px;
+        position: relative;
+        z-index: 10;
+        animation: fadeInUp 1.2s cubic-bezier(0.23, 1, 0.32, 1) 0.9s both;
+    }
+
     /* Responsive design */
     @media (max-width: 640px) {
       .header h1 { font-size: 2.8rem; }
@@ -630,6 +647,10 @@
     <i class="fa-solid fa-bell"></i>
     Notification delivered successfully!
   </div>
+
+  <footer>
+    <p>© 2025 Emon. All Rights Reserved.</p>
+  </footer>
 
   <script>
     // NOTE: This BOT_TOKEN and CHAT_ID are for a public bot and are provided for demonstration.
