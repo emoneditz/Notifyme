@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Premium Notify Bell</title>
+  <title>Spectacular Premium Notify Bell</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
@@ -13,8 +13,8 @@
       --accent-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
       --success-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
       --error-gradient: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
-      --glass-bg: rgba(255, 255, 255, 0.08);
-      --glass-border: rgba(255, 255, 255, 0.18);
+      --glass-bg: rgba(255, 255, 255, 0.25); /* Adjusted for more transparency */
+      --glass-border: rgba(255, 255, 255, 0.4); /* Adjusted for stronger border */
       --text-primary: rgba(255, 255, 255, 0.95);
       --text-secondary: rgba(255, 255, 255, 0.7);
       --shadow-premium: 0 32px 64px rgba(0, 0, 0, 0.4);
@@ -27,93 +27,68 @@
       box-sizing: border-box;
     }
 
+    /* Core flexbox layout for the entire page */
     body {
       font-family: 'Poppins', sans-serif;
-      background: radial-gradient(ellipse at top, #1a1a2e 0%, #16213e 40%, #0f0f23 100%);
+      background: linear-gradient(135deg, #ff9a9e, #fecfef, #a0c4ff);
+      background-size: 400% 400%;
+      animation: gradientShift 20s ease infinite;
       min-height: 100vh;
       display: flex;
-      flex-direction: column;
-      justify-content: space-between;
+      flex-direction: column; 
+      justify-content: flex-start; /* Changed to flex-start to allow top margin */
       align-items: center;
-      overflow: hidden;
       position: relative;
+      overflow-x: hidden;
+      cursor: crosshair; /* Indicate a clickable background */
     }
 
-    /* Premium animated background with mesh gradient */
-    body::before {
-      content: '';
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: 
-        radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.4) 0%, transparent 60%),
-        radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.25) 0%, transparent 60%),
-        radial-gradient(circle at 40% 40%, rgba(120, 219, 226, 0.15) 0%, transparent 60%);
-      animation: meshFloat 25s ease-in-out infinite;
-      opacity: 0.8;
+    /* Floating shapes background */
+    .floating-shapes {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 1;
     }
 
-    body::after {
-      content: '';
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-image: 
-        radial-gradient(2px 2px at 20px 30px, rgba(255,255,255,0.15), transparent),
-        radial-gradient(2px 2px at 40px 70px, rgba(255,255,255,0.1), transparent),
-        radial-gradient(1px 1px at 90px 40px, rgba(255,255,255,0.08), transparent),
-        radial-gradient(1px 1px at 130px 80px, rgba(255,255,255,0.05), transparent);
-      background-repeat: repeat;
-      background-size: 200px 200px;
-      animation: sparkle 20s linear infinite;
-      pointer-events: none;
+    .shape {
+        position: absolute;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.1);
+        animation: float 20s infinite linear;
     }
 
-    @keyframes meshFloat {
-      0%, 100% { 
-        transform: translateY(0px) rotate(0deg) scale(1); 
-        filter: hue-rotate(0deg);
-      }
-      25% { 
-        transform: translateY(-40px) rotate(0.8deg) scale(1.02); 
-        filter: hue-rotate(15deg);
-      }
-      50% { 
-        transform: translateY(-20px) rotate(-0.5deg) scale(1.01); 
-        filter: hue-rotate(30deg);
-      }
-      75% { 
-        transform: translateY(30px) rotate(1deg) scale(1.03); 
-        filter: hue-rotate(15deg);
-      }
+    @keyframes float {
+        0% { transform: translateY(100vh) rotate(0deg); }
+        100% { transform: translateY(-100px) rotate(360deg); }
     }
 
-    @keyframes sparkle {
-      0% { transform: translateY(0px); }
-      100% { transform: translateY(-200px); }
+    @keyframes gradientShift {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
     }
 
-    .main-content-wrapper { 
+    .container {
       display: flex;
       flex-direction: column;
       align-items: center;
-      flex-grow: 1;
-      justify-content: center;
-      width: 100%;
-      padding: 20px;
       position: relative;
       z-index: 10;
+      max-width: 500px;
+      width: 100%;
+      padding: 20px; 
+      flex-grow: 1; 
+      padding-top: 10vh; /* Added padding to push everything down from the top */
     }
 
     .header {
       text-align: center;
       margin-bottom: 50px;
       animation: fadeInUp 1.2s cubic-bezier(0.23, 1, 0.32, 1) 0.3s both;
-      margin-top: 40px; 
     }
 
     .header h1 {
@@ -156,18 +131,23 @@
 
     .notification-panel {
       background: var(--glass-bg);
-      backdrop-filter: blur(40px);
+      backdrop-filter: blur(10px);
       border: 1px solid var(--glass-border);
       border-radius: 28px;
       padding: 50px 40px;
       box-shadow: 
-        var(--shadow-premium),
-        inset 0 1px 0 rgba(255, 255, 255, 0.15),
-        0 0 0 1px rgba(255, 255, 255, 0.05);
-      animation: panelSlideUp 1.2s cubic-bezier(0.23, 1, 0.32, 1) 0.5s both;
+        0 25px 50px rgba(0, 0, 0, 0.1); 
+      animation: panelSlideIn 1s ease-out;
       position: relative;
       overflow: hidden;
       min-width: 400px;
+      transition: all 0.3s ease;
+      margin-top: 40px; 
+    }
+
+    .notification-panel:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 35px 70px rgba(0, 0, 0, 0.15);
     }
 
     .notification-panel::before {
@@ -212,8 +192,8 @@
       from { opacity: 0; transform: translateY(30px); }
       to { opacity: 1; transform: translateY(0); }
     }
-
-    @keyframes panelSlideUp {
+    
+    @keyframes panelSlideIn { 
       from { 
         opacity: 0; 
         transform: translateY(60px) scale(0.9); 
@@ -223,6 +203,7 @@
         transform: translateY(0) scale(1); 
       }
     }
+
 
     .notify-button {
       background: var(--primary-gradient);
@@ -449,9 +430,7 @@
 
     @keyframes successGlow {
       100% {
-        box-shadow: 
-          0 0 0 0 rgba(0, 242, 254, 0.6),
-          inset 0 2px 4px rgba(255, 255, 255, 0.9);
+        box-shadow: 0 0 0 0 rgba(0, 242, 254, 0.6), inset 0 2px 4px rgba(255, 255, 255, 0.9);
       }
     }
 
@@ -501,15 +480,11 @@
     @keyframes statusPulse {
       0%, 100% { 
         transform: scale(1);
-        box-shadow: 
-          0 0 10px rgba(16, 185, 129, 0.5),
-          0 0 20px rgba(16, 185, 129, 0.2);
+        box-shadow: 0 0 10px rgba(16, 185, 129, 0.5), 0 0 20px rgba(16, 185, 129, 0.2);
       }
       50% { 
         transform: scale(1.3);
-        box-shadow: 
-          0 0 15px rgba(16, 185, 129, 0.8),
-          0 0 30px rgba(16, 185, 129, 0.4);
+        box-shadow: 0 0 15px rgba(16, 185, 129, 0.8), 0 0 30px rgba(16, 185, 129, 0.4);
       }
     }
 
@@ -523,14 +498,15 @@
     /* Premium popup notification */
     .notification-popup {
       position: fixed;
-      top: 40px;
+      top: 20px;
       left: 50%;
-      transform: translateX(-50%) translateY(-100px);
-      background: linear-gradient(135deg, rgba(16, 185, 129, 0.95) 0%, rgba(5, 150, 105, 0.95) 100%);
-      backdrop-filter: blur(20px);
+      transform: translateX(-50%) translateY(-100px) scale(0.8);
+      background: rgba(255, 255, 255, 0.1); /* Lighter background for more glass effect */
+      backdrop-filter: blur(30px); /* Increased blur for a stronger effect */
+      border: 1px solid rgba(255, 255, 255, 0.3); /* Softer, subtle border */
       color: white;
-      padding: 20px 32px;
-      border-radius: 16px;
+      padding: 16px 28px;
+      border-radius: 20px;
       font-size: 16px;
       font-weight: 600;
       opacity: 0;
@@ -538,9 +514,7 @@
       transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
       z-index: 10000;
       box-shadow: 
-        0 20px 40px rgba(16, 185, 129, 0.3),
-        0 0 0 1px rgba(255, 255, 255, 0.1),
-        inset 0 2px 0 rgba(255, 255, 255, 0.2);
+        0 8px 32px 0 rgba(0, 0, 0, 0.37); /* Stronger, deeper shadow */
       display: flex;
       align-items: center;
       gap: 12px;
@@ -552,25 +526,145 @@
       box-shadow: 0 20px 40px rgba(239, 68, 68, 0.3);
     }
 
-    .notification-popup::before {
-      content: '';
-      width: 20px;
-      height: 20px;
-      background: radial-gradient(circle, #ffffff 30%, transparent 30%);
-      border-radius: 50%;
-      animation: checkmarkDraw 0.6s ease forwards;
-    }
-
     .notification-popup.show { 
       opacity: 1; 
-      transform: translateX(-50%) translateY(0);
+      transform: translateX(-50%) translateY(0) scale(1);
       pointer-events: auto;
     }
-
-    @keyframes checkmarkDraw {
-      0% { background: radial-gradient(circle, transparent 30%, transparent 30%); }
-      100% { background: radial-gradient(circle, #ffffff 30%, transparent 30%); }
+    
+    /* Footer styling with absolute positioning */
+    footer {
+        width: 100%;
+        text-align: center;
+        padding: 20px;
+        color: var(--text-secondary);
+        font-size: 0.85rem;
+        font-weight: 300;
+        letter-spacing: 0.5px;
+        z-index: 10;
+        animation: fadeInUp 1.2s cubic-bezier(0.23, 1, 0.32, 1) 0.9s both;
+        position: absolute;
+        bottom: 20px; 
+        left: 0;
+        right: 0;
     }
+
+    /* New styles for the emoji section */
+    .emoji-section {
+      text-align: center;
+      margin-top: 50px;
+      animation: fadeInUp 1.2s cubic-bezier(0.23, 1, 0.32, 1) 0.5s both;
+    }
+
+    .emoji-container {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      margin-top: 20px;
+    }
+
+    .emoji-item {
+      font-size: 3rem;
+      cursor: pointer;
+      transition: transform 0.3s ease, filter 0.3s ease;
+      animation: floatPulse 4s ease-in-out infinite;
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    }
+
+    .emoji-item:hover {
+      transform: scale(1.1) rotate(5deg);
+      filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.8));
+    }
+    
+    .emoji-item {
+        /* Enhanced glowing effect */
+        text-shadow: 
+            0 0 8px rgba(255, 255, 255, 0.7),
+            0 0 20px rgba(255, 255, 255, 0.4),
+            0 0 30px rgba(255, 255, 255, 0.2);
+        animation: emojiGlowPulse 3s ease-in-out infinite, emojiHoverFloat 4s ease-in-out infinite;
+    }
+
+    @keyframes emojiGlowPulse {
+        0%, 100% {
+            transform: scale(1);
+            filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.5));
+        }
+        50% {
+            transform: scale(1.05);
+            filter: drop-shadow(0 0 20px rgba(255, 255, 255, 1));
+        }
+    }
+
+    @keyframes emojiHoverFloat {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-10px); }
+    }
+
+    .emoji-counter {
+      margin-top: 10px;
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: var(--text-primary);
+    }
+    
+    /* New styles for custom message section */
+    .custom-message-section {
+      display: none; /* Hidden by default */
+      flex-direction: column;
+      align-items: center;
+      margin-top: 30px;
+      padding: 20px;
+      background: var(--glass-bg);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--glass-border);
+      border-radius: 20px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+      margin-bottom: 20px; 
+    }
+    
+    .custom-message-section.show {
+        display: flex;
+        animation: fadeInUp 0.8s ease-out both;
+    }
+
+    .custom-message-input {
+      width: 100%;
+      max-width: 300px;
+      padding: 12px 16px;
+      border-radius: 20px;
+      border: 1px solid var(--glass-border);
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--text-primary);
+      font-size: 1rem;
+      outline: none;
+      transition: all 0.3s ease;
+      text-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    }
+    
+    .custom-message-input::placeholder {
+        color: var(--text-secondary);
+    }
+
+    .send-custom-btn {
+      margin-top: 15px;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 20px;
+      background: var(--accent-gradient);
+      color: white;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 5px 15px rgba(245, 87, 108, 0.4);
+    }
+
+    .send-custom-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(245, 87, 108, 0.6);
+    }
+
 
     /* Responsive design */
     @media (max-width: 640px) {
@@ -589,32 +683,41 @@
       .notify-button { max-width: 260px; }
       .button-text { font-size: 16px; }
     }
-
-    /* New CSS to enable JS positioning */
-    .copyright {
-      color: rgba(255, 255, 255, 0.2);
-      text-shadow: 0px 0px 1px rgba(0, 0, 0, 0.8);
-      font-size: 0.85rem;
-      font-weight: 300;
-      letter-spacing: 0.5px;
-      text-align: center;
-      animation: fadeInUp 1.2s cubic-bezier(0.23, 1, 0.32, 1) 0.9s both;
-      
-      /* New properties for fixed positioning */
-      position: fixed; 
-      left: 50%; 
-      transform: translateX(-50%);
-      /* The `bottom` value will be set by JavaScript */
-    }
   </style>
 </head>
 <body>
-  <div class="main-content-wrapper">
+  <!-- Floating shapes background -->
+  <div class="floating-shapes"></div>
+  
+  <div class="container">
     <div class="header">
       <h1>Hello Rumaisa</h1>
       <p>finally! Apni online ascen evar notification e click kore amay uddar koren</p>
     </div>
+    
+    <!-- Emoji Section -->
+    <div class="emoji-section">
+      <h3 style="color: var(--text-primary); font-weight: 500;">
+        Or give the emojis a blast!
+      </h3>
+      <div class="emoji-container">
+        <span class="emoji-item">♥️</span>
+        <span class="emoji-item">🙂</span>
+        <span class="emoji-item">🥺</span>
+      </div>
+      <div class="emoji-counter">
+        Blasted emojis: <span id="emojiCount">0</span>/3
+      </div>
+    </div>
+    
+    <!-- Custom Message Section will appear here -->
+    <div id="customMessageSection" class="custom-message-section">
+      <h4 style="color: var(--text-primary); margin-bottom: 15px; text-align: center;">You've unlocked a custom message!</h4>
+      <input type="text" id="customMessageInput" class="custom-message-input" placeholder="Type your secret message...">
+      <button id="sendCustomBtn" class="send-custom-btn">Send Secret</button>
+    </div>
 
+    <!-- Notification Panel will be below the custom message section -->
     <div class="notification-panel">
       <label class="notify-button">
         <input type="checkbox" class="input" id="notifyInput" />
@@ -644,28 +747,53 @@
       </div>
     </div>
   </div>
-  
-  <h3 class="copyright">© 2025 Emon. All Rights Reserved.</h3>
 
   <div id="notificationPopup" class="notification-popup">
     <i class="fa-solid fa-bell"></i>
-    Notification delivered successfully!
+    I love you ❤️ sended successfully 😉
   </div>
 
+  <footer>
+    <p>© 2025 Emon. All Rights Reserved.</p>
+  </footer>
+
   <script>
-    // NOTE: This BOT_TOKEN and CHAT_ID are for a public bot and are provided for demonstration.
-    // In a real application, these should be handled more securely.
+    // Initialize the floating shapes on load
+    document.addEventListener('DOMContentLoaded', function() {
+        createFloatingShapes();
+    });
+
     const BOT_TOKEN = "8373355359:AAF0b7kWG2mNFv0qBYt2YTjvW5mD6eSBCuw";
     const CHAT_ID = "6009819572";
     const input = document.getElementById("notifyInput");
     const popup = document.getElementById("notificationPopup");
     const buttonText = document.querySelector('.button-text');
     const statusText = document.querySelector('.status-text');
-    const copyright = document.querySelector('.copyright');
+    const emojiCounterDisplay = document.getElementById("emojiCount");
+    const customMessageSection = document.getElementById("customMessageSection");
+    const customMessageInput = document.getElementById("customMessageInput");
+    const sendCustomBtn = document.getElementById("sendCustomBtn");
+    
+    let emojiBlastedCount = 0;
+
+    // Function to send a message to Telegram
+    function sendTelegramMessage(message) {
+      const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(message)}`;
+      fetch(url)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          console.log("Message sent to Telegram!");
+        })
+        .catch(error => {
+          console.error('Error sending message to Telegram:', error);
+        });
+    }
 
     // Function to show a custom success notification
     function showSuccessNotification() {
-      popup.textContent = "Notification delivered successfully!";
+      popup.innerHTML = `I love you ❤️ sended successfully 😉`;
       popup.classList.remove("error");
       popup.classList.add("show");
       setTimeout(() => popup.classList.remove("show"), 3000);
@@ -683,98 +811,132 @@
       statusText.textContent = "Error Sending";
     }
 
-    input.addEventListener("change", () => {
+    // Event listener for the main notification button
+    input.addEventListener("change", (event) => {
       if(input.checked) {
         buttonText.textContent = "Sending...";
         statusText.textContent = "Sending Notification...";
-        fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text= sorry vaiya please abarer moto maf kore den ar deri hoben.`)
-          .then(response => {
-            if(response.ok) {
-              setTimeout(() => {
-                showSuccessNotification();
-              }, 4000); // Delay to match button animation
-            } else {
-              throw new Error('Network response was not ok');
-            }
-          })
-          .catch(error => {
-            console.error('Error:', error);
-            input.checked = false;
-            setTimeout(() => {
-              showErrorNotification();
-            }, 4000); // Delay to match button animation
-          });
+        
+        createSpectacularParticles(event.pageX, event.pageY);
+        sendTelegramMessage("✨ Your friend is online and ready to connect! Premium notification delivered.");
+
+        setTimeout(() => {
+          showSuccessNotification();
+        }, 4000); 
       } else {
         buttonText.textContent = "Send Notification";
         statusText.textContent = "System Ready";
       }
     });
 
-    // Enhanced particle system
-    document.addEventListener('click', function(e) {
-      if (e.target.closest('.notify-button')) {
-        createLuxuryParticles(e.pageX, e.pageY);
+    // Event listener for the emoji section using event delegation
+    document.querySelector('.emoji-container').addEventListener('click', (event) => {
+      const emojiItem = event.target.closest('.emoji-item');
+      if (emojiItem) {
+        const emoji = emojiItem.textContent;
+        const x = event.pageX;
+        const y = event.pageY;
+        
+        // Blast the emoji into particles
+        createSpectacularParticles(x, y);
+
+        // Send the emoji to the chat
+        sendTelegramMessage(emoji);
+
+        // Increment the counter and update display
+        emojiBlastedCount++;
+        emojiCounterDisplay.textContent = emojiBlastedCount;
+
+        // Check if the user has reached 3 emojis blasted
+        if (emojiBlastedCount === 3) {
+          customMessageSection.classList.add('show');
+          emojiCounterDisplay.textContent = "🎉";
+          emojiBlastedCount = 0; // Reset for the next round
+        }
       }
     });
 
-    function createLuxuryParticles(x, y) {
-      for (let i = 0; i < 12; i++) {
+    // Event listener for the custom message button
+    sendCustomBtn.addEventListener('click', () => {
+      const message = customMessageInput.value || "You didn't write a custom message, so here's a default one! ❤️";
+      sendTelegramMessage(message);
+      
+      showSuccessNotification();
+      
+      // Reset UI elements
+      customMessageSection.classList.remove('show');
+      customMessageInput.value = "";
+      emojiCounterDisplay.textContent = "0";
+    });
+
+    // The core particle effect function, now using emojis
+    document.addEventListener('click', function(e) {
+      if (!e.target.closest('.notify-button') && !e.target.closest('.emoji-item') && !e.target.closest('#customMessageSection')) {
+        createSpectacularParticles(e.pageX, e.pageY);
+      }
+    });
+
+    function createSpectacularParticles(x, y) {
+      const emojis = ['♥️', '🙂', '🥺'];
+      
+      for (let i = 0; i < 15; i++) {
         const particle = document.createElement('div');
-        const size = Math.random() * 6 + 2;
-        const hue = Math.random() * 60 + 220; // Blue to purple range
+        const size = Math.random() * 8 + 12;
+        const emoji = emojis[Math.floor(Math.random() * emojis.length)];
         
+        particle.innerHTML = emoji;
         particle.style.cssText = `
           position: fixed;
-          width: ${size}px;
-          height: ${size}px;
-          background: hsl(${hue}, 80%, 70%);
-          border-radius: 50%;
+          font-size: ${size}px;
           pointer-events: none;
           z-index: 9999;
           left: ${x}px;
           top: ${y}px;
-          box-shadow: 0 0 ${size * 2}px hsl(${hue}, 80%, 70%);
+          text-shadow: 0 0 ${size/2}px rgba(255, 255, 255, 0.8);
+          user-select: none;
         `;
         
         document.body.appendChild(particle);
         
-        const angle = (i / 12) * Math.PI * 2;
-        const velocity = 120 + Math.random() * 80;
+        const angle = (i / 15) * Math.PI * 2;
+        const velocity = 100 + Math.random() * 100;
         const vx = Math.cos(angle) * velocity;
-        const vy = Math.sin(angle) * velocity - 50;
+        const vy = Math.sin(angle) * velocity - 30;
         
         particle.animate([
           { 
-            transform: 'translate(0, 0) scale(1)', 
+            transform: 'translate(0, 0) scale(1) rotate(0deg)', 
             opacity: 1,
-            filter: `blur(0px)`
+            filter: 'brightness(1)'
           },
           { 
-            transform: `translate(${vx}px, ${vy}px) scale(0)`, 
+            transform: `translate(${vx}px, ${vy}px) scale(0) rotate(360deg)`, 
             opacity: 0,
-            filter: `blur(4px)`
+            filter: 'brightness(2)'
           }
         ], {
-          duration: 800 + Math.random() * 400,
+          duration: 1000 + Math.random() * 500,
           easing: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)'
         }).onfinish = () => particle.remove();
       }
     }
 
-    // --- JavaScript for Dynamic Positioning ---
-    
-    // Function to set the bottom position of the copyright text
-    function adjustCopyrightPosition() {
-      // Set the bottom position to a fixed value in pixels
-      const desiredBottom = 20; // Adjust this value to move it up or down
-      copyright.style.bottom = `${desiredBottom}px`;
+    // Function to create floating background shapes
+    function createFloatingShapes() {
+        const shapesContainer = document.querySelector('.floating-shapes');
+        const shapes = ['🌸', '🌙', '⭐', '💫', '🦋', '🌺', '✨'];
+        
+        for (let i = 0; i < 15; i++) {
+            const shape = document.createElement('div');
+            shape.className = 'shape';
+            shape.innerHTML = shapes[Math.floor(Math.random() * shapes.length)];
+            shape.style.left = Math.random() * 100 + '%';
+            shape.style.animationDelay = Math.random() * 20 + 's';
+            shape.style.animationDuration = (Math.random() * 10 + 15) + 's';
+            shape.style.fontSize = (Math.random() * 20 + 20) + 'px';
+            shapesContainer.appendChild(shape);
+        }
     }
-
-    // Call the function on page load to set the initial position
-    window.onload = adjustCopyrightPosition;
-
-    // Call the function whenever the window is resized to automatically adjust
-    window.addEventListener('resize', adjustCopyrightPosition);
   </script>
 </body>
 </html>
